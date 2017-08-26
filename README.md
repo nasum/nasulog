@@ -1,21 +1,10 @@
-# nasulog
+# OpenPoem
 
-ポエムを書きためるWebアプリケーション。[pplog](https://www.pplog.net/)のような何か。
+Web application that writes poem. like [pplog](https://www.pplog.net/).
 
-## ポエム
+## Development Environment
 
-熱い想いとかやりたいこととかポエムに書くといいと思う。でもそればっかりだと暑苦しいので個人的な反省とか今やってることとかも自由にかけるとなおよいと思う。
-
-nasum
-
-## 参考URL
-
-* [ポエム駆動開発によるWEBサービスの作り方 pplog誕生ものがたり](http://ppworks.hatenablog.jp/entry/2014/07/13/012855)
-* [会社で「ポエム」を綴ろう！ ～ポエム駆動で理想を語ると社内の風が変わる！～](http://gihyo.jp/lifestyle/serial/01/poem-driven/0001)
-
-## 開発環境構築
-
-### 必要になるもの
+### necesarry
 
 * Ruby (2.3.0)
 * MySQL
@@ -24,66 +13,54 @@ nasum
 * Google のトークン
 * Docker for Mac
 
-### 準備
+### provision
 
-#### Google OAuth を設定する
+#### Setting Google OAuth
 
-* [Google Developers Console](https://console.developers.google.com/) で nasulog 用のプロジェクトを作る
-* 作ったプロジェクトの Credentials ページから OAuth consent screen を設定する
-  * とりあえず必須項目の Product name shown to users だけ入力すれば ok
-* Create client ID からクライアントIDを作る
-  * Application type は web application を選択
-  * Authorized redirect URIs は `http://localhost:3000/auth/google/callback` としておく (ドメインやポート番号はローカルの環境に合わせる)
-* プロジェクトの Overview ページの Google APIs から、"Google+ API" を enable にする
+* Create Project in [Google Developers Console](https://console.developers.google.com/)
 
-#### .env.exampleをコピーし .env に環境変数を書いておく
+#### copy .env.example and edit .env
 
 ```bash
 cp .env.example .env
 ```
 
-#### ミドルウェアの起動
+#### start middleware
 
 ```bash
 docker-compose -f docker-compose.yml up
 ```
 
-#### Rails アプリケーションの初期設定
+#### Setting Rails
 
 ```bash
 $ ./bin/setup
 ```
 
-#### 動作確認
+#### Start Project
 
 ```bash
 $ ./bin/rails s
 ```
 
-[localhost:3000](http://localhost:3000/) をブラウザで開いて「ログイン」→環境変数の RESTRICT_DOMAIN に設定したドメインのアカウントで許可を出してトップページまで戻り、エラーが表示されていなければ ok
-
-### テスト
+### test
 
 ```bash
 $ ./bin/rake spec
 ```
 
-### 環境構築手順に変更が生じた場合
+### Change of environment
 
-* 可能であれば `bin/setup` に手順を追加
-* それが無理なら README.md に追記を
+* Add process for `bin/setup`
+* or  edit README.md
 
 ## Heroku
 
-### nodejsの設定
+### setting nodejs
 
 - heroku config:set BUILDPACK_URL=https://github.com/heroku/heroku-buildpack-multi.git
 
-### MySQLの設定
+### setting MySQL
 
 - ClearDB
 - JawsDB
-
-Add-onsで`mysql`で検索して上記のいずれかを追加。生成される環境変数の`CLEARDB_DATABASE_URL`を`DATABASE_URL`として追加する。
-
-※ その際に`mysql`の部分を`mysql2`に設定する
